@@ -8,9 +8,9 @@ public class RegisterAccountDTO {
 
     String password;
 
-    Roles role;
+    String role;
 
-    public RegisterAccountDTO(String username, String password, Roles role) {
+    public RegisterAccountDTO(String username, String password, String role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -24,7 +24,7 @@ public class RegisterAccountDTO {
         return password;
     }
 
-    public Roles getRole() {
+    public String getRole() {
         return role;
     }
 

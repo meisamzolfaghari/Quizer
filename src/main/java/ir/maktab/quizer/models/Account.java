@@ -24,6 +24,9 @@ public class Account {
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Person person;
+
     @ManyToMany
     @JoinTable(
             name = "account_roles",
@@ -45,6 +48,14 @@ public class Account {
         this.password = password;
         this.accountStatus = AccountStatus;
         this.roles = roles;
+    }
+
+    public Account(String username, String password, AccountStatus AccountStatus, Set<Role> roles , Person person) {
+        this.username = username;
+        this.password = password;
+        this.accountStatus = AccountStatus;
+        this.roles = roles;
+        this.person = person;
     }
 
     public Long getId() {
@@ -81,6 +92,14 @@ public class Account {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override
