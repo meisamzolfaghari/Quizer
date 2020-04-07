@@ -1,6 +1,5 @@
 package ir.maktab.quizer.services;
 
-import ir.maktab.quizer.dto.LoginAccountDTO;
 import ir.maktab.quizer.dto.RegisterAccountDTO;
 import ir.maktab.quizer.enums.AccountStatus;
 import ir.maktab.quizer.enums.Roles;
@@ -10,10 +9,10 @@ import ir.maktab.quizer.models.Account;
 import ir.maktab.quizer.models.Person;
 import ir.maktab.quizer.models.Student;
 import ir.maktab.quizer.models.Teacher;
-import ir.maktab.quizer.outcome.LoginAccountOutcome;
 import ir.maktab.quizer.outcome.RegisterAccountOutcome;
 import ir.maktab.quizer.repositories.AccountRepository;
 import ir.maktab.quizer.repositories.RoleRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +25,7 @@ public class AccountServiceImpl implements AccountService {
     final RoleRepository roleRepository;
     final PasswordEncoder passwordEncoder;
 
+    @Autowired
     public AccountServiceImpl(AccountRepository accountRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.roleRepository = roleRepository;
@@ -53,15 +53,11 @@ public class AccountServiceImpl implements AccountService {
                         registerAccountDTO.getUsername(),
                         passwordEncoder.encode(registerAccountDTO.getPassword()),
                         AccountStatus.AWAITING_APPROVAL,
+                        false,
                         Set.of(roleRepository.findRoleByTitle(Roles.valueOf(registerAccountDTO.getRole()))),
                         person));
 
         return new RegisterAccountOutcome(account.getUsername());
     }
 
-    @Override
-    public LoginAccountOutcome login(LoginAccountDTO loginAccountDTO) {
-
-        return null;
-    }
 }

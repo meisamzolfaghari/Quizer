@@ -21,11 +21,15 @@ public class Account {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
+    private boolean enabled = false;
+
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "PERSON", referencedColumnName = "firstName")
     private Person person;
+
 
     @ManyToMany
     @JoinTable(
@@ -43,14 +47,14 @@ public class Account {
         this.accountStatus = accountStatus;
     }
 
-    public Account(String username, String password, AccountStatus AccountStatus, Set<Role> roles) {
+    public Account(String username, String password, AccountStatus AccountStatus,Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.accountStatus = AccountStatus;
         this.roles = roles;
     }
 
-    public Account(String username, String password, AccountStatus AccountStatus, Set<Role> roles , Person person) {
+    public Account(String username, String password, AccountStatus AccountStatus , boolean enabled, Set<Role> roles, Person person) {
         this.username = username;
         this.password = password;
         this.accountStatus = AccountStatus;
@@ -102,6 +106,14 @@ public class Account {
         this.person = person;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,12 +127,13 @@ public class Account {
         return Objects.hash(username);
     }
 
+
     @Override
     public String toString() {
         return "Account{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", enabled=" + enabled +
                 ", accountStatus=" + accountStatus +
                 ", roles=" + roles +
                 '}';
