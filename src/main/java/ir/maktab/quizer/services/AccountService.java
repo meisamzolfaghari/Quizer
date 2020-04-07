@@ -1,11 +1,15 @@
 package ir.maktab.quizer.services;
 
-import ir.maktab.quizer.models.Account;
+import ir.maktab.quizer.dto.LoginAccountDTO;
+import ir.maktab.quizer.dto.RegisterAccountDTO;
+import ir.maktab.quizer.exceptions.UsernameNotAllowed;
+import ir.maktab.quizer.outcome.LoginAccountOutcome;
+import ir.maktab.quizer.outcome.RegisterAccountOutcome;
 
 public interface AccountService {
 
-    Account register();
+    RegisterAccountOutcome register(RegisterAccountDTO registerAccountDTO) throws UsernameNotAllowed;
 
-    Account login();
+    LoginAccountOutcome login(LoginAccountDTO loginAccountDTO);
 
 }
